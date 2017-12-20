@@ -156,6 +156,10 @@ void X_HMAC_CTX_free(HMAC_CTX *ctx) {
 	HMAC_CTX_free(ctx);
 }
 
+int X_PEM_write_bio_PrivateKey_traditional(BIO *bio, EVP_PKEY *key, const EVP_CIPHER *enc, unsigned char *kstr, int klen, pem_password_cb *cb, void *u) {
+	return PEM_write_bio_PrivateKey_traditional(bio, key, enc, kstr, klen, cb, u);
+}
+
 #endif
 
 
@@ -274,6 +278,12 @@ void X_HMAC_CTX_free(HMAC_CTX *ctx) {
 		HMAC_CTX_cleanup(ctx);
 		OPENSSL_free(ctx);
 	}
+}
+
+int X_PEM_write_bio_PrivateKey_traditional(BIO *bio, EVP_PKEY *key, const EVP_CIPHER *enc, unsigned char *kstr, int klen, pem_password_cb *cb, void *u) {
+	// This method was renamed to PEM_write_bio_PrivateKey_traditional in
+	// v1.1.0
+	return PEM_write_bio_PrivateKey(bio, key, enc, kstr, klen, cb, u);
 }
 
 #endif
